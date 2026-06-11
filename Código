@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define numsensor 10
+#define nummedia 3
+
+int main(){
+float media;
+float resultado;
+float leituras[numsensor*nummedia];
+float mediadescarte;
+float mediageral;
+float novamedia;
+float diferencav1,diferencav2,diferencav3;
+int quantrecorrentes;
+int contagematual;
+float temperaturarecorrente;
+int maiorcontagem=0;
+
+for(int i=0;i < numsensor*nummedia;i=i+3){
+printf("informe as tres leituras do sensor\n");
+scanf("%f %f %f",&leituras[i],&leituras[i+1],&leituras[i+2]);
+
+media=(leituras[i]+leituras[i+1]+leituras[i+2]) /3;
+
+if(media>leituras[i]){
+diferencav1= media-leituras[i];
+}
+else{
+diferencav1=leituras[i]-media;
+}
+if(media>leituras[i+1]){
+diferencav2=media-leituras[i+1];
+}
+else{
+diferencav2=leituras[i+1]-media;
+}
+if(media>leituras[i+2]){
+diferencav3=media-leituras[i+2];
+}
+else{
+diferencav3=leituras[i+2]-media;
+}
+if(diferencav1 > diferencav2 && diferencav1 > diferencav3){
+novamedia=(leituras[i+1]+leituras[i+2])/2;
+}
+else if(diferencav2 > diferencav3){
+novamedia=(leituras[i]+leituras[i+2])/2;
+}
+else{
+novamedia=(leituras[i]+leituras[i+1])/2;
+}
+printf("media geral e: %.2f\n",media);
+printf("media com descarte e:%.2f\n",novamedia);
+}
+for(int s=0;s<numsensor*nummedia;s++){
+contagematual=0;
+for(int j=0;j<numsensor*nummedia;j++){
+if(leituras[s] == leituras[j]){
+contagematual++;
+}
+}
+if(contagematual>maiorcontagem){
+maiorcontagem=contagematual;
+temperaturarecorrente=leituras[s];
+}
+}
+printf("temperatura mais recorrente foi: %.2f, aparecendo %d vezes\n",temperaturarecorrente,maiorcontagem);
+return 0;
+}
